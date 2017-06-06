@@ -1,0 +1,48 @@
+.wrapper {
+    margin: 20px auto;
+    width: 360px;
+}
+
+.wrapper .input-group {
+    margin-top: 20px;
+}
+
+#titleInput {
+    border-radius: 6px;
+}
+
+#descriptionTextarea {
+    border-radius: 6px;
+    height: 120px;
+}
+
+.wrapper button.submit {
+    margin-top: 20px;
+    width: 100px;
+}
+
+.wrapper h1 {
+    text-align: center;
+}
+
+.wrapper .footer {
+    height: 34px;
+    margin-top: 20px;
+}
+
+.wrapper .footer .price {
+    line-height: 34px;
+}
+
+.wrapper button.subscribe,
+.wrapper button.bill {
+    float: right;
+    width: 100px;
+}
+
+.wrapper .user {
+    border-radius: 6px;
+    margin-top: 10px;
+    line-height: 35px;
+    height: 55px;
+}

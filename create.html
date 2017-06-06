@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blockchain</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav navbar-left">
+          <li><a href="/">Home</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+          <li class="active"><a href="/create.html">Create</a></li>
+          <li><a href="/subscribe.html">Subscribe</a></li>
+          <li><a href="/bill.html">Bill</a></li>
+          <li><a href="/pay.html">Pay</a></li>
+      </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="wrapper">
+      <div class="input-group input-group-lg">
+          <label>Title</label>
+          <input id="titleInput" class="form-control" type="text">
+      </div>
+      <div class="input-group input-group-lg">
+          <label>Description</label>
+          <textarea id="descriptionTextarea" class="form-control" rows="4"></textarea>
+      </div>
+      <button type="button" class="submit btn" id="submitButton">Submit</button>
+  </div>
+
+  <script src="js/admin.js" ></script>
+</body>
+</html>
