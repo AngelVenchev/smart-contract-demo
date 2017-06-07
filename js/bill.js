@@ -1,18 +1,17 @@
 $( document ).ready(function() {
-    // Get from local data storage
-    var data = {
-        title: "Title 123",
-        description: "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ornare eleifend elementum. Vestibulum at lectus sollicitudin orci elementum luctus."
-    };
-    $(".wrapper h1.title")[0].innerHTML = data.title;
-    $(".wrapper p.description")[0].innerHTML = data.description;
+    if(localStorage.getItem("serviceProvider")) {
+        var provider = JSON.parse(localStorage.getItem("serviceProvider"));
 
-    var users = [
-        { name: "Alice", address: "0x123" }, 
-        { name: "Carol", address: "0x456" }
-    ];
-    users.forEach(createItem);
-    
+        $(".wrapper h1.title")[0].innerHTML = provider.title;
+        $(".wrapper p.description")[0].innerHTML = provider.description;
+
+        if(localStorage.getItem("users")) {
+            var users = JSON.parse(localStorage.getItem("users"));
+            users.forEach(createItem);
+        }
+    } else {
+        $(".wrapper h1.title")[0].innerHTML = "No registered service providers";
+    }
 });
 
 function createItem(item) {
@@ -28,5 +27,30 @@ function createItem(item) {
 }
 
 function billUser(e, item) {
-    console.log("Address: ", $(e.target).attr('id'));
+    console.log("Address: ", );
+    var contract = getContract();
+    var address = $(e.target).attr('id');
+    contract.bill(address, 
+        function(err, transactionHash) {
+            if(err) {
+                alert(err);
+            } else {
+                alert("Billing submitted")
+                console.log(transactionHash);
+            }
+        }
+    );
+}
+
+function getProvider() {
+    var provider = JSON.parse(localStorage.getItem("serviceProvider"));
+    return provider;
+}
+
+function getContract() {
+    var abi = JSON.parse(localStorage.getItem("abi"));
+    var provider = getProvider();
+    var sampleContract = web3.eth.contract(abi);
+    var contract = sampleContract.at(provider.address);
+    return contract;
 }

@@ -7,29 +7,29 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <ul class="nav navbar-nav navbar-left">
-          <li class="active"><a href="/smart-contract-demo/">Home</a></li>
+        <li><a href="/smart-contract-demo/">Home</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-          <li><a href="/smart-contract-demo/create.html">Create</a></li>
-          <li><a href="/smart-contract-demo/subscribe.html">Subscribe</a></li>
-          <li><a href="/smart-contract-demo/bill.html">Bill</a></li>
-          <li><a href="/smart-contract-demo/pay.html">Pay</a></li>
-          <li><a href="/smart-contract-demo/withdraw.html">Withdraw</a></li>
+        <li><a href="/smart-contract-demo/create.html">Create</a></li>
+        <li><a href="/smart-contract-demo/subscribe.html">Subscribe</a></li>
+        <li><a href="/smart-contract-demo/bill.html">Bill</a></li>
+        <li><a href="/smart-contract-demo/pay.html">Pay</a></li>
+        <li class="active"><a href="/smart-contract-demo/withdraw.html">Withdraw</a></li>
       </ul>
       </div>
     </div>
   </nav>
-  <div class="jumbotron">
-    <div style="margin:0 0 0 20px">
-      <h1>Service Provider Subscription</h1>
-      <p>Service provider system runinng in the blockchain. The system allows subscription, billing and payment all of this running on the blockchain.</p>
-      <p><a class="btn btn-primary btn-lg" href="/smart-contract-demo/create.html" role="button">Create Provider</a></p>
-    </div>
+  <div class="wrapper">
+      <button type="button" class="submit btn" id="submitButton">Withdraw</button>
   </div>
+
+  <script src="js/withdraw.js" ></script>
 </body>
 </html>

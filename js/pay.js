@@ -1,19 +1,57 @@
 $(document).ready(function() {
-	var data = {
-		address: "0x123123123",
-	    title: "Title 123",
-	    description: "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ornare eleifend elementum. Vestibulum at lectus sollicitudin orci elementum luctus.",
-	    debt: 7
-	};
+	if(localStorage.getItem("serviceProvider")) {
+        var contract = getContract();
+        contract.subscribers(web3.eth.defaultAccount,
+        	function(err, subscriber) {
+				var provider = JSON.parse(localStorage.getItem("serviceProvider"));
 
-	$(".wrapper h1.title")[0].innerHTML = data.title;
-	$(".wrapper p.description")[0].innerHTML = data.description;
-	$(".wrapper .footer .price")[0].innerHTML = "Debt: " + data.debt + "Eth";
+		        $(".wrapper h1.title")[0].innerHTML = provider.title;
+		        $(".wrapper p.description")[0].innerHTML = provider.description;
 
-	$("#payButton").attr("data-address", data.address);
-	$("#payButton").on("click", pay);
+
+    			var price = web3.fromWei(subscriber[0].toString())
+        		$(".wrapper .footer .price")[0].innerHTML = "Debt: " + price + "Eth";
+
+        		$("#payButton").attr("data-address", provider.address);
+				$("#payButton").on("click", pay);
+        	});
+
+    } else {
+        $(".wrapper h1.title")[0].innerHTML = "No registered service providers";
+    }
 });
 
 function pay(e, item) {
-	console.log("Address: ", $(e.target).attr('data-address'));
+	var contract = getContract();
+	contract.subscribers(web3.eth.defaultAccount,
+    	function(err, subscriber) {
+			var debt = web3.fromWei(subscriber[0].toString())
+			contract.pay.sendTransaction(
+				{ 
+					from: web3.eth.defaultAccount, 
+					value: web3.toWei(debt) 
+				},
+				function(err, txHash) {
+					if(err) {
+						alert(err);
+					} else {
+						console.log(txHash);
+						alert("Successful payment");
+					}
+				})
+    	});
+}
+
+function getContract() {
+    var abi = JSON.parse(localStorage.getItem("abi"));
+    var provider = getProvider();
+    var sampleContract = web3.eth.contract(abi);
+    var contract = sampleContract.at(provider.address);
+    return contract;
+}
+
+
+function getProvider() {
+    var provider = JSON.parse(localStorage.getItem("serviceProvider"));
+    return provider;
 }

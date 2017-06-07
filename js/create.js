@@ -1,11 +1,32 @@
-$( document ).ready(function() {
-	document.getElementById("submitButton").addEventListener("click", submit);
+$(document).ready(function() {
+	if(!localStorage.getItem("abi")) {
+		localStorage.setItem("abi", JSON.stringify([{"constant":false,"inputs":[],"name":"pay","outputs":[],"payable":true,"type":"function"},{"constant":false,"inputs":[],"name":"withdraw","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_username","type":"string"},{"name":"_plan","type":"uint256"}],"name":"subscribe","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"subscribers","outputs":[{"name":"debt","type":"uint256"},{"name":"plan","type":"uint256"},{"name":"username","type":"string"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"subscriberIds","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"userAddress","type":"address"}],"name":"bill","outputs":[],"payable":false,"type":"function"}]))
+	}
+
+	$("#submitButton").on("click", submit);
+
 });
 
 function submit() {
-    var title = document.getElementById("titleInput").value;
-    var description = document.getElementById("descriptionTextarea").value;
-
-    //submit
-    console.log(title, description);
+	var abi = JSON.parse(localStorage.getItem("abi"));
+	var serviceProviderContract = web3.eth.contract(abi);
+	var serviceProvider = serviceProviderContract.new(
+	   	{
+	     	from: web3.eth.deafaultAccount, 
+			data: '0x6060604052341561000c57fe5b5b6106098061001c6000396000f30060606040523615610076576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680631b9265b8146100785780633ccfd60b14610082578063495dcbe3146100945780635745ae28146100f75780639de23458146101d1578063bf98731714610231575bfe5b610080610267565b005b341561008a57fe5b6100926102ba565b005b341561009c57fe5b6100f5600480803590602001908201803590602001908080601f01602080910402602001604051908101604052809392919081815260200183838082843782019150505050505091908035906020019091905050610314565b005b34156100ff57fe5b61012b600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190505061040d565b60405180848152602001838152602001806020018281038252838181546001816001161561010002031660029004815260200191508054600181600116156101000203166002900480156101c05780601f10610195576101008083540402835291602001916101c0565b820191906000526020600020905b8154815290600101906020018083116101a357829003601f168201915b505094505050505060405180910390f35b34156101d957fe5b6101ef6004808035906020019091905050610436565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b341561023957fe5b610265600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610476565b005b34600160003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001600082825403925050819055505b565b3373ffffffffffffffffffffffffffffffffffffffff166108fc3073ffffffffffffffffffffffffffffffffffffffff16319081150290604051809050600060405180830381858888f19350505050151561031157fe5b5b565b6060604051908101604052806000815260200182815260200183815250600160003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600082015181600001556020820151816001015560408201518160020190805190602001906103a092919061050c565b50905050600080548060010182816103b8919061058c565b916000526020600020900160005b33909190916101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550505b5050565b600160205280600052604060002060009150905080600001549080600101549080600201905083565b60008181548110151561044557fe5b906000526020600020900160005b915054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600160008273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060010154600160008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001600082825401925050819055505b50565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061054d57805160ff191683800117855561057b565b8280016001018555821561057b579182015b8281111561057a57825182559160200191906001019061055f565b5b50905061058891906105b8565b5090565b8154818355818115116105b3578183600052602060002091820191016105b291906105b8565b5b505050565b6105da91905b808211156105d65760008160009055506001016105be565b5090565b905600a165627a7a72305820e529f07ae558cfdfb7a8a724ae7dc89cea706042657f22cbf4c6db61895a0c540029'
+	   	}, function (e, contract){
+		    console.log(e, contract);
+		    if (typeof contract.address !== 'undefined') {
+		    	var provider = {
+		    		title: $("#titleInput").val(),
+    				description: $("#descriptionTextarea").val(),
+    				address: contract.address,
+    				price: 3
+		    	}
+		    	localStorage.setItem("serviceProvider", JSON.stringify(provider));
+				alert("Service Provider successfully created");
+	         	console.log('Contract mined! address: ' + contract.address + ' transactionHash: ' + contract.transactionHash);
+	   		}
+	   	}
+   	);
 }
